@@ -7,9 +7,10 @@ metadata:
     scenarios.ai.sap.com/name: "Code (Tutorial)"
     executables.ai.sap.com/description: "Trains model on median house prices"
     executables.ai.sap.com/name: "House Price (Sklearn Example)"
+    artifacts.ai.sap.com/housemodel.kind:"model"
   labels:
     scenarios.ai.sap.com/id: "learning-code"
-    ai.sap.com/version: "3.0"
+    ai.sap.com/version: "4.0"
 spec:
   imagePullSecrets:
     - name: firstprojectdocker # your docker registry secret
