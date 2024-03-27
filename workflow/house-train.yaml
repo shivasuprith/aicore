@@ -10,7 +10,7 @@ metadata:
     artifacts.ai.sap.com/housemodel.kind: "model"
   labels:
     scenarios.ai.sap.com/id: "learning-code"
-    ai.sap.com/version: "5.0"
+    ai.sap.com/version: "6.0"
 spec:
   imagePullSecrets:
     - name: firstprojectdocker # your docker registry secret
@@ -22,8 +22,16 @@ spec:
         template: mycodeblock1
 
   - name: mycodeblock1
+    outputs:
+      artifacts:
+        - name: basicemodel
+          globalName: basicmodel
+          path: /app/model/
+          archive:
+            none:  
+              {}
     container:
-      image: docker.io/shivasuprith/house-price:12 # Your docker image name
+      image: docker.io/shivasuprith/house-price:13 # Your docker image name
       command: ["/bin/sh", "-c"]
       args:
         - "python /app/src/main.py"
