@@ -32,8 +32,8 @@ spec:
           path: /app/data/ # where to copy in the Dataset in the Docker image
     outputs:
       artifacts:
-        - name: basicemodel
-          globalName: basicmodel
+        - name: finalbasicemodel
+          globalName: finalbasicmodel
           path: /app/model/
           archive:
             none:  
