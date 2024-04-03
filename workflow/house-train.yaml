@@ -7,14 +7,18 @@ metadata:
     scenarios.ai.sap.com/name: "Code (Tutorial)"
     executables.ai.sap.com/description: "Trains model on median house prices"
     executables.ai.sap.com/name: "House Price (Sklearn Example)"
+     artifacts.ai.sap.com/housedataset.kind: "dataset"
     artifacts.ai.sap.com/housemodel.kind: "model"
   labels:
     scenarios.ai.sap.com/id: "learning-code"
-    ai.sap.com/version: "6.0"
+    ai.sap.com/version: "7.0"
 spec:
   imagePullSecrets:
     - name: firstprojectdocker # your docker registry secret
   entrypoint: mypipeline
+  arguments:
+    parameters: # placeholder for string like inputs
+        - name: DT_MAX_DEPTH # identifier local to this workflow
   templates:
   - name: mypipeline
     steps:
@@ -22,6 +26,10 @@ spec:
         template: mycodeblock1
 
   - name: mycodeblock1
+    inputs:
+      artifacts:  # placeholder for cloud storage attachements
+        - name: housedataset # a name for the placeholder
+          path: /app/data/ # where to copy in the Dataset in the Docker image
     outputs:
       artifacts:
         - name: basicemodel
@@ -31,7 +39,10 @@ spec:
             none:  
               {}
     container:
-      image: docker.io/shivasuprith/house-price:13 # Your docker image name
+      image: docker.io/shivasuprith/house-price:14 # Your docker image name
       command: ["/bin/sh", "-c"]
+      env:
+        - name: DT_MAX_DEPTH # name of the environment variable inside Docker container
+          value: "{{workflow.parameters.DT_MAX_DEPTH}}"
       args:
         - "python /app/src/main.py"
